@@ -23,13 +23,19 @@ var brickColumnCount = 14;
 var brickWidth = 62;
 var brickHeight = 20;
 var brickPadding = 5;
-var brickOffsetTop = 20;
+var brickOffsetTop = 40;
 var brickOffsetLeft = 13;
 var gameRunning = false;
 var bricks = [];
-for(c=0; c<brickColumnCount; c++) {
-    bricks[c] = [];
-    for(r=0; r<brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0, status: 1 };
-    }
-}
+var countdown = 3;
+var countdownInterval;
+var paddleHalved = false;
+var playerBalls = 2;
+var displayCountdown = false;
+var playerScore = 0;
+var extraBallScore = 0;
+var bricksRemoved = 0;
+var displayHighScore = false;
+var displayEscMenu = false;
+var displayMainMenu = false;
+var displayCredits = false;

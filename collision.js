@@ -7,15 +7,58 @@ function collisionDetection() {
                 let y = balls[i].y - ballRadius;
                 if(b.status == 1) {
                     if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                        balls[i].ballYSpeed = balls[i].ballYSpeed * 1.01;
-                        balls[i].ballXSpeed = balls[i].ballXSpeed * 1.01;
-                        paddleSpeed = paddleSpeed * 1.01;
                         balls[i].ballYSpeed = -balls[i].ballYSpeed;
-                        //ballColor = getRandomColor();
+                        let rowCleared = true;
                         b.status = 0;
+                        for (let x = 0; x < brickColumnCount; x++) {
+                            if (bricks[x][r].status == 1) {
+                                rowCleared = false;
+                            }
+                        }
+                        if (rowCleared) {
+                            playerScore += 25;
+                        }
+                        if (r == 0) {
+                            if (!paddleHalved) {
+                                paddleWidth = paddleWidth/2;
+                                paddleHalved = true;
+                            }
+                            playerScore += 5;
+                        } else if (r < 2) {
+                            playerScore += 5;
+                        } else if (r < 4) {
+                            playerScore += 3;
+                        } else if (r < 6) {
+                            playerScore += 2;
+                        } else {
+                            playerScore += 1;
+                        }
+                        bricksRemoved += 1;
+                        if (bricksRemoved == 4) {
+                            balls[i].ballYSpeed = balls[i].ballYSpeed * 1.20;
+                            balls[i].ballXSpeed = balls[i].ballXSpeed * 1.20;
+                        } else if (bricksRemoved == 12) {
+                            balls[i].ballYSpeed = balls[i].ballYSpeed * 1.20;
+                            balls[i].ballXSpeed = balls[i].ballXSpeed * 1.20;
+                        } else if (bricksRemoved == 36) {
+                            balls[i].ballYSpeed = balls[i].ballYSpeed * 1.20;
+                            balls[i].ballXSpeed = balls[i].ballXSpeed * 1.20;
+                        } else if (bricksRemoved == 62) {
+                            balls[i].ballYSpeed = balls[i].ballYSpeed * 1.20;
+                            balls[i].ballXSpeed = balls[i].ballXSpeed * 1.20;
+                        }
                     }
                 }
             }
+        }
+        if (playerScore - extraBallScore >= 100) {
+            extraBallScore = playerScore;
+            var ball2 = {};
+            ball2.x = canvas.width/2;
+            ball2.y = canvas.height - 100;
+            ball2.ballXSpeed = 5;
+            ball2.ballYSpeed = -5;
+            balls.push(ball2);
         }
     }
     for (let i = 0; i < balls.length; i++) {

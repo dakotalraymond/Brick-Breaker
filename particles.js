@@ -26,4 +26,12 @@ function createParticles(x, y, color) {
     }
 }
 
+function drawParticles() {
+    for (var i = 0; i < particles.length; i++) {
+        if (particles[i].lifetime > 0) {
+            particles[i].Draw(context);
+        } 
+    }
+}
+
     

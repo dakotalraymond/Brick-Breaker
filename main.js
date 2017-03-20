@@ -5,15 +5,7 @@ function render() {
         drawPaddle();
         drawBricks();
         drawScore();
-        for (var i = 0; i < particles.length; i++) {
-            if (particles[i].lifetime > 0) {
-                particles[i].Update();
-                particles[i].Draw(context);
-            } else {
-                particles.splice(i, 1);
-            }
-        }
-        update();
+        drawParticles();
     } else if (displayCountdown) {
         writeCountdown();
     } else if (displayHighScore) {
@@ -29,7 +21,12 @@ function render() {
         drawScore();
         drawPauseMenu();
     }
-    requestAnimationFrame(render);
+}
+
+function gameLoop() {
+    render();
+    update();
+    requestAnimationFrame(gameLoop);
 }
 
 function updateBalls() {
@@ -70,12 +67,21 @@ function updateBalls() {
 }
 
 function update() {
-    updateBalls();
-    if(rightPressed && paddleX < canvas.width-paddleWidth) {
-        paddleX += paddleSpeed;
-    }
-    else if(leftPressed && paddleX > 0) {
-        paddleX -= paddleSpeed;
+    if (gameRunning) {
+        updateBalls();
+        if(rightPressed && paddleX < canvas.width-paddleWidth) {
+            paddleX += paddleSpeed;
+        }
+        else if(leftPressed && paddleX > 0) {
+            paddleX -= paddleSpeed;
+        }
+        for (var i = 0; i < particles.length; i++) {
+            if (particles[i].lifetime > 0) {
+                particles[i].Update();
+            } else {
+                particles.splice(i, 1);
+            }
+        }
     }
 }
 
@@ -169,4 +175,4 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 displayMainMenu = true;
-render();
+gameLoop();

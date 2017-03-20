@@ -9,13 +9,17 @@ function render() {
     } else if (displayCountdown) {
         writeCountdown();
     } else if (displayHighScore) {
-
+        drawHighScores();
     } else if (displayCredits) {
-
-    } else if (displayEscMenu) {
-
+        drawCredits();
     } else if (displayMainMenu) {
-
+        drawMainMenu();
+    } else if (displayPauseMenu) {
+        drawBall();
+        drawPaddle();
+        drawBricks();
+        drawScore();
+        drawPauseMenu();
     }
     requestAnimationFrame(render);
 }
@@ -49,7 +53,10 @@ function updateBalls() {
             balls.push(ball1);
             startBall();
         } else {
-
+            var playerName = prompt("Congrats! Please enter your name for the high score board!", "Player 1");
+            gameRunning = false;
+            updateHighScores(playerScore, playerName);
+            displayHighScore = true;
         }
     }
 }
@@ -115,12 +122,43 @@ function startBall() {
     }
 }
 
-function startGame() {
-    
+function initializeGame() {
+    displayMainMenu = false;
+    displayCountdown = true;
+    paddleX = (canvas.width-paddleWidth)/2;
+    balls = [];
+    ball1 = {};
+    ball1.x = canvas.width/2;
+    ball1.y = canvas.height - 100;
+    ball1.ballXSpeed = 5;
+    ball1.ballYSpeed = -5;
+    balls.push(ball1);
+    paddleWidth = 150;
+    rightPressed = false;
+    leftPressed = false;
+    bricks = [];
+    paddleHalved = false;
+    playerBalls = 2;
+    playerScore = 0;
+    extraBallScore = 0;
+    bricksRemoved = 0;
+    mainMenuSelection = "new";
+    for(c=0; c<brickColumnCount; c++) {
+        bricks[c] = [];
+        for(r=0; r<brickRowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0, status: 1 };
+        }
+    }
+    countdown = 3;
+    countdownInterval = setInterval(decreaseCountdown, 1000);
+    if (paddleHalved) {
+        paddleWidth = paddleWidth*2;
+        paddleHalved = false;
+    }
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
-startBall();
+displayMainMenu = true;
 render();

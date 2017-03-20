@@ -5,6 +5,14 @@ function render() {
         drawPaddle();
         drawBricks();
         drawScore();
+        for (var i = 0; i < particles.length; i++) {
+            if (particles[i].lifetime > 0) {
+                particles[i].Update();
+                particles[i].Draw(context);
+            } else {
+                particles.splice(i, 1);
+            }
+        }
         update();
     } else if (displayCountdown) {
         writeCountdown();

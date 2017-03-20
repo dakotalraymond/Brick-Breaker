@@ -9,14 +9,13 @@ function drawBricks() {
                 context.beginPath();
                 context.rect(brickX, brickY, brickWidth, brickHeight);
                 if (r < 2) {
-                    context.fillStyle = "#ff471a";
+                    context.fillStyle = "#47d147";
                 } else if (r < 4) {
                     context.fillStyle = "#0080ff";
                 } else if (r < 6) {
+                    context.fillStyle = "#ff471a";
+                }else {
                     context.fillStyle = "#ffff00";
-                }
-                else {
-                    context.fillStyle = "#47d147";
                 }
                 context.fill();
                 context.closePath();

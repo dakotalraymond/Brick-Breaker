@@ -18,6 +18,19 @@ function collisionDetection() {
                         if (rowCleared) {
                             playerScore += 25;
                         }
+                        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                        let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                        let color = "#fff";
+                        if (r < 2) {
+                            color = "#47d147";
+                        } else if (r < 4) {
+                            color = "#0080ff";
+                        } else if (r < 6) {
+                            color = "#ff471a";
+                        } else {
+                            color = "#ffff00";
+                        }
+                        createParticles(brickX, brickY, color);
                         if (r == 0) {
                             if (!paddleHalved) {
                                 paddleWidth = paddleWidth/2;

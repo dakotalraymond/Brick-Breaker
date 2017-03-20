@@ -36,3 +36,5 @@ var displayMainMenu = false;
 var displayCredits = false;
 var mainMenuSelection = "new";
 var displayPauseMenu = false;
+var particles = [];
+var num_particles = 200;
